@@ -1,0 +1,21 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+}
+
+#header {
+  background-color: rgb(230, 156, 198);
+  color: white;
+  text-align: center;
+  justify-content: center;
+}
+
+#memberCard {
+  text-align: center;
+  justify-content: center;
+  color: white;
+}

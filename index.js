@@ -29,23 +29,43 @@ const questionsEmployee = [
 const questionMan = [
   {
     type: "input",
-    name: "officeNum",
+    name: "office",
     message: "What is the team manager's office number?",
   },
 ];
 
-const questionIntern = [
+const questionEng = [
   {
     type: "input",
-    name: "ghProfile",
-    message: "What is this intern's GitHub username?",
+    name: "github",
+    message: "What is this engineer's GitHub username?",
   },
 ];
 
-const questionStu = [
+const questionInt = [
   {
     type: "input",
-    name: "stuSchool",
-    message: "What school does this student attend?",
+    name: "school",
+    message: "What school does this intern attend?",
   },
 ];
+
+function init() {
+  inquirer
+    .prompt(questionsEmployee)
+
+    .then(function (data) {
+      if (data.role == "Manager") {
+        inquirer.prompt(questionMan);
+      } else if (data.role == "Engineer") {
+        inquirer.prompt(questionEng);
+      } else {
+        inquirer.prompt(questionInt);
+      }
+    });
+}
+
+function type(data) {}
+
+init();
+type();

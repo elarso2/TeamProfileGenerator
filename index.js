@@ -1,7 +1,10 @@
 const inquirer = require("inquirer");
-const jes = require("jest");
-const fs = require("fs");
+const Manager = require("./lib/manager");
+const Engineer = require("./lib/engineer");
+const Intern = require("./lib/intern");
+const Create = require("./createHTML");
 
+// Questions that get asked for all employees
 const questionsEmployee = [
   {
     type: "input",
@@ -26,6 +29,7 @@ const questionsEmployee = [
   },
 ];
 
+// Office number question for manager
 const questionMan = [
   {
     type: "input",
@@ -34,6 +38,7 @@ const questionMan = [
   },
 ];
 
+// GitHub profile question for engineer
 const questionEng = [
   {
     type: "input",
@@ -42,6 +47,7 @@ const questionEng = [
   },
 ];
 
+// School question for intern
 const questionInt = [
   {
     type: "input",
@@ -50,29 +56,42 @@ const questionInt = [
   },
 ];
 
+// function to trigger the basic questions function
 function init() {
   basic();
 }
 
+// variable for the role selected for a member
 let memRole = "";
+
+// Array containing each team member created
+const teamMems = [];
+
+// Asks the 4 questions for each employee
 function basic() {
   inquirer
     .prompt(questionsEmployee)
 
+    // asking final specific question depending on employee role
+    // adds the array of that employee's information to the teamMems array
+    // calls the nextMem function
     .then(function (data) {
       if (data.role == "Manager") {
         inquirer.prompt(questionMan).then(function (data2) {
           memRole = data2.office;
+          teamMems.push([data.name, data.role, data.id, data.email, memRole]);
           nextMem();
         });
       } else if (data.role == "Engineer") {
         inquirer.prompt(questionEng).then(function (data2) {
           memRole = data2.github;
+          teamMems.push([data.name, data.role, data.id, data.email, memRole]);
           nextMem();
         });
       } else {
         inquirer.prompt(questionInt).then(function (data2) {
           memRole = data2.school;
+          teamMems.push([data.name, data.role, data.id, data.email, memRole]);
           nextMem();
         });
       }
@@ -80,6 +99,7 @@ function basic() {
     });
 }
 
+// Allows user to add a new member or it will exit the program and will trigger the writing function in createHTML.js
 function nextMem() {
   inquirer
     .prompt({
@@ -93,7 +113,7 @@ function nextMem() {
       if (data.newMem == "Yes, add another member.") {
         basic();
       } else {
-        return "Team building complete.";
+        console.log(teamMems);
       }
     });
 }
